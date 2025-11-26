@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="magnifier_styles.css" />
+    <title>A Letter</title>
+</head>
+<body>
+
+  <div class="flipbook">
+    
+<!-- +++++++++++++ THE LETTER +++++++++++++ -->
+    <div class="coverFront">
+      <img src="bookAllPg/letterPg_01.png" alt="" />
+    </div>
+
+    <div class="bookAllPgL">
+      <img src="bookAllPg/letterPg_03.png" alt="" />
+    </div>
+    <div class="bookAllPgR">
+      <img src="bookAllPg/letterPg_04.png" alt="" />
+    </div>
+    
+    <div class="bookAllPgL">
+      <img src="bookAllPg/letterPg_05.png" alt="" />
+    </div>
+
+    <div class="bookAllPgR">
+      <img src="bookAllPg/letterPg_06.png" alt="" />
+    </div>
+
+    <div class="coverBack">
+      <img class="cover"src="bookAllPg/letterPg_02.png" alt="" />  
+    </div>
+
+  </div>
+  
+  <!-- Add navigation buttons below the flipbook -->
+  <div class="navigation">
+      <button class="nav-button left-button" aria-label="Previous page">&larr;</button>
+      <button class="nav-button right-button" aria-label="Next page">&rarr;</button>
+  </div>
+
+  <!-- Magnifying glass -->
+  <div id="magnifier">
+    <div id="magnifierLens"></div>
+  </div>
+
+  <!-- Magnifier toggle button -->
+  <button id="magnifierToggle" aria-label="Toggle magnifier">🔍</button>
+
+  <script src="jquery.js"></script>
+  <script src="turn.js"></script>
+  
+  <script>
+    document.querySelectorAll('img').forEach(img => {
+    img.setAttribute('draggable', 'false');
+    img.setAttribute('oncontextmenu', 'return false;');
+    img.setAttribute('ondragstart', 'return false;');
+    });
+    
+    // Prevent right-click on images
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    // Prevent drag and drop of images
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    // Allow keyboard navigation with arrow keys
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            $('.flipbook').turn('previous');
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            $('.flipbook').turn('next');
+        }
+    });
+
+    $(".flipbook").turn({
+      turnCorners: "tl,tr,bl,br",
+      cornerSize: 150,
+      acceleration: true,
+      autoCenter: true,
+      when: {
+          turning: function(event, page) {
+              console.log("Turning to page:", page); // Debugging log
+          }
+      }
+   }); 
+  </script>
+  
+  <script>
+    const flipbook = $(".flipbook");
+    const leftButton = document.querySelector('.left-button');
+    const rightButton = document.querySelector('.right-button');
+
+    // Navigate backward by 1 page
+    leftButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        flipbook.turn('previous');
+    });
+
+    // Navigate forward by 1 page
+    rightButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        flipbook.turn('next');
+    });
+</script>
+
+<!-- Star Background -->
+<script>
+  let starCount = 30; // Initial number of stars
+  let timeOnPage = 0; // Track time on page in seconds
+
+  function createNewStar() {
+    var newStarText = document.createElement('div');
+    newStarText.id = 'starNew' + Math.random(); // Give id
+    newStarText.innerText = '*'; 
+
+    // Add styles to the star
+    newStarText.style.position = 'absolute';
+    newStarText.style.color = 'springgreen';
+    newStarText.style.fontSize = '20px';
+    newStarText.style.zIndex = '-1'; // Make it in the background
+
+    document.body.appendChild(newStarText);
+
+    // Gradually increase font size
+    let currentSize = 20;
+    const growInterval = setInterval(() => {
+      if (currentSize < 200) {
+        currentSize++;
+        newStarText.style.fontSize = currentSize + 'px';
+      } else {
+        clearInterval(growInterval);
+      }
+    }, 1000); // Increase by 1px every 1 second
+
+    function moveRandomly() {
+        var left = Math.random() * (window.innerWidth - newStarText.offsetWidth);
+        var top = Math.random() * (window.innerHeight - newStarText.offsetHeight);
+        newStarText.style.left = left + 'px';
+        newStarText.style.top = top + 'px';
+    }
+
+    moveRandomly(); // Initial position
+    setInterval(moveRandomly, 1500); // Change position every 1.5 sec
+  }
+
+  // Create initial stars
+  for (let i = 0; i < starCount; i++) {
+      createNewStar();
+  }
+
+  // Gradually add more stars as user stays longer
+  setInterval(() => {
+      timeOnPage++;
+      
+      // Add 1 new star every 10 seconds (up to a maximum of 200 stars)
+      if (timeOnPage % 10 === 0 && starCount < 200) {
+          starCount++;
+          createNewStar();
+      }
+  }, 1000); // Check every second
+
+  // Magnifier toggle button functionality
+  const magnifierToggle = document.getElementById('magnifierToggle');
+  const magnifier = document.getElementById('magnifier');
+  let magnifierVisible = false;
+
+  magnifierToggle.addEventListener('click', () => {
+      magnifierVisible = !magnifierVisible;
+      magnifier.style.display = magnifierVisible ? 'block' : 'none';
+      
+      // Reset position when showing
+      if (magnifierVisible) {
+          magnifier.style.left = '';
+          magnifier.style.top = '';
+          magnifier.style.right = '20px';
+          magnifier.style.bottom = '90px';
+      }
+  });
+
+  // Magnifying glass functionality
+  const magnifierLens = document.getElementById('magnifierLens');
+  const flipbookElement = document.querySelector('.flipbook');
+  let isMagnifying = false;
+  let magnifierOffsetX, magnifierOffsetY;
+
+  magnifier.addEventListener('mousedown', (e) => {
+      isMagnifying = true;
+      magnifierOffsetX = e.clientX - magnifier.getBoundingClientRect().left;
+      magnifierOffsetY = e.clientY - magnifier.getBoundingClientRect().top;
+      e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+      if (isMagnifying) {
+          const x = e.clientX - magnifierOffsetX;
+          const y = e.clientY - magnifierOffsetY;
+          magnifier.style.left = x + 'px';
+          magnifier.style.top = y + 'px';
+          magnifier.style.right = 'auto';
+          magnifier.style.bottom = 'auto';
+      }
+
+      // Update magnification effect
+      const magnifierRect = magnifier.getBoundingClientRect();
+      const magnifierCenterX = magnifierRect.left + magnifierRect.width / 2;
+      const magnifierCenterY = magnifierRect.top + magnifierRect.height / 2;
+      
+      // Use document.elementFromPoint to get the actual topmost element at magnifier position
+      let targetImage = null;
+      
+      // Temporarily hide magnifier to check what's underneath
+      magnifier.style.pointerEvents = 'none';
+      const elementAtPoint = document.elementFromPoint(magnifierCenterX, magnifierCenterY);
+      magnifier.style.pointerEvents = 'auto';
+      
+      // Check if the element is an image or find the closest image
+      if (elementAtPoint) {
+          if (elementAtPoint.tagName === 'IMG') {
+              // Direct hit on image
+              const parent = elementAtPoint.parentElement;
+              if (parent && (parent.classList.contains('bookAllPgL') || 
+                            parent.classList.contains('bookAllPgR') || 
+                            parent.classList.contains('coverFront') || 
+                            parent.classList.contains('coverBack'))) {
+                  targetImage = elementAtPoint;
+              }
+          } else {
+              // Check if it's a page container
+              let container = elementAtPoint;
+              while (container && !container.classList.contains('bookAllPgL') && 
+                     !container.classList.contains('bookAllPgR') && 
+                     !container.classList.contains('coverFront') && 
+                     !container.classList.contains('coverBack')) {
+                  container = container.parentElement;
+                  if (!container || container === document.body) break;
+              }
+              
+              if (container) {
+                  const img = container.querySelector('img');
+                  if (img) {
+                      const imgRect = img.getBoundingClientRect();
+                      // Verify magnifier is over the image
+                      if (magnifierCenterX >= imgRect.left && magnifierCenterX <= imgRect.right &&
+                          magnifierCenterY >= imgRect.top && magnifierCenterY <= imgRect.bottom) {
+                          targetImage = img;
+                      }
+                  }
+              }
+          }
+      }
+      
+      if (targetImage) {
+          const imgRect = targetImage.getBoundingClientRect();
+          
+          // Calculate relative position within the image (0-1)
+          const relX = (magnifierCenterX - imgRect.left) / imgRect.width;
+          const relY = (magnifierCenterY - imgRect.top) / imgRect.height;
+          
+          // Set background position for magnification
+          const bgPosX = relX * 100;
+          const bgPosY = relY * 100;
+          
+          magnifierLens.style.backgroundImage = `url(${targetImage.src})`;
+          magnifierLens.style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
+          magnifierLens.style.backgroundSize = `${imgRect.width * 3}px ${imgRect.height * 3}px`; // 3x magnification
+      } else {
+          magnifierLens.style.backgroundImage = 'none';
+      }
+  });
+
+  document.addEventListener('mouseup', () => {
+      if (isMagnifying) {
+          isMagnifying = false;
+      }
+  });
+
+  // Helper function to get current page image
+  function getCurrentPageImage() {
+      const currentPage = flipbook.turn('page');
+      const pageElement = flipbookElement.querySelector(`.p${currentPage} img`);
+      return pageElement ? pageElement.src : '';
+  }
+
+</script>
+
+</body>
+</html>
