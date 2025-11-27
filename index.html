@@ -449,7 +449,11 @@
       // Play button click sound
       buttonClickSound.currentTime = 0;
       buttonClickSound.play().catch(err => console.log('Audio play failed:', err));
-      
+            
+      // Start background music
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      backgroundMusic.play().catch(err => console.log('Background music play failed:', err));
+
       landingPage.style.opacity = '0';
       setTimeout(() => {
         landingPage.style.display = 'none';
@@ -803,3 +807,4 @@
 </body>
 
 </html>
+
