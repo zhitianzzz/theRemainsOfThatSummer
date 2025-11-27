@@ -429,6 +429,18 @@
   <script src="turn.js"></script>
   
   <script>
+    // Enable audio on first user interaction (cursor movement)
+    let audioEnabled = false;
+    document.addEventListener('mousemove', function enableAudio() {
+      if (!audioEnabled) {
+        audioEnabled = true;
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        backgroundMusic.play().catch(err => console.log('Background music autoplay failed:', err));
+        // Remove listener after first triggered
+        document.removeEventListener('mousemove', enableAudio);
+      }
+    }, { once: true });
+
     // Landing page logic
     const landingPage = document.getElementById('landingPage');
     const enterButton = document.getElementById('enterButton');
@@ -803,6 +815,7 @@
 </body>
 
 </html>
+
 
 
 
