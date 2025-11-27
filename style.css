@@ -281,3 +281,25 @@ img {
 #magnifier {
     display: none;
 }
+
+/* Credits footer */
+#creditsFooter {
+    position: fixed;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #888;
+    z-index: 10001;
+    font-family: 'Special Elite', system-ui;
+}
+
+#creditsLink {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+#creditsLink:hover {
+    color: #fff;
+}
