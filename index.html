@@ -431,7 +431,7 @@
   <script>
     // Landing page logic
     const landingPage = document.getElementById('landingPage');
-    const enterButton = document.getElementById('enterButton');
+    const Button = document.getElementById('Button');
     const landingTitle = document.getElementById('landingTitle');
 
     // Fade in the title
@@ -439,9 +439,9 @@
       landingTitle.style.opacity = '1';
     }, 500);
 
-    // Show enter button after title appears
+    // Show  button after title appears
     setTimeout(() => {
-      enterButton.style.opacity = '1';
+      Button.style.opacity = '1';
     }, 2500);
 
     // Handle enter button click
@@ -450,9 +450,22 @@
       buttonClickSound.currentTime = 0;
       buttonClickSound.play().catch(err => console.log('Audio play failed:', err));
             
-      // Start background music
+      // Start background music - ensure it loads and plays
       const backgroundMusic = document.getElementById('backgroundMusic');
-      backgroundMusic.play().catch(err => console.log('Background music play failed:', err));
+      backgroundMusic.load(); // Reload the audio
+      backgroundMusic.muted = false; // Ensure it's not muted
+      backgroundMusic.volume = 0.6; // Set volume again
+      const playPromise = backgroundMusic.play();
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('Background music started successfully');
+          })
+          .catch(err => {
+            console.log('Background music play failed:', err);
+          });
+      }
 
       landingPage.style.opacity = '0';
       setTimeout(() => {
@@ -807,4 +820,5 @@
 </body>
 
 </html>
+
 
