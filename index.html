@@ -429,46 +429,27 @@
   <script src="turn.js"></script>
   
   <script>
-    // Wait for DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      // Landing page logic
-      const landingPage = document.getElementById('landingPage');
-      const enterButton = document.getElementById('enterButton');
-      const landingTitle = document.getElementById('landingTitle');
+    // Landing page logic
+    const landingPage = document.getElementById('landingPage');
+    const enterButton = document.getElementById('enterButton');
+    const landingTitle = document.getElementById('landingTitle');
 
-      // Fade in the title
-      setTimeout(() => {
-        landingTitle.style.opacity = '1';
-      }, 500);
+    // Fade in the title
+    setTimeout(() => {
+      landingTitle.style.opacity = '1';
+    }, 500);
 
-      // Show enter button after title appears
-      setTimeout(() => {
-        enterButton.style.opacity = '1';
-      }, 2500);
+    // Show enter button after title appears
+    setTimeout(() => {
+      enterButton.style.opacity = '1';
+    }, 2500);
 
-      // Handle enter button click
-      enterButton.addEventListener('click', () => {
+    // Handle enter button click
+    enterButton.addEventListener('click', () => {
       // Play button click sound
       buttonClickSound.currentTime = 0;
       buttonClickSound.play().catch(err => console.log('Audio play failed:', err));
-            
-      // Start background music - ensure it loads and plays
-      const backgroundMusic = document.getElementById('backgroundMusic');
-      backgroundMusic.load(); // Reload the audio
-      backgroundMusic.muted = false; // Ensure it's not muted
-      backgroundMusic.volume = 0.6; // Set volume again
-      const playPromise = backgroundMusic.play();
       
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('Background music started successfully');
-          })
-          .catch(err => {
-            console.log('Background music play failed:', err);
-          });
-      }
-
       landingPage.style.opacity = '0';
       setTimeout(() => {
         landingPage.style.display = 'none';
@@ -562,7 +543,6 @@
           }
       }
    }); 
-    }); // End DOMContentLoaded
   </script>
   
   <script>
