@@ -26,6 +26,30 @@
     <source src="sound/bbc_ocean.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Page flip sound -->
+  <audio id="pageFlipSound">
+    <source src="sound/paper_flip.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Button click sound -->
+  <audio id="buttonClickSound">
+    <source src="sound/button6.wav" type="audio/wav">
+  </audio>
+
+  <!-- Magnifier sounds -->
+  <audio id="magnifierShowSound">
+    <source src="sound/magnify_show.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="magnifierCloseSound">
+    <source src="sound/magnify_close.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Button hover sound -->
+  <audio id="buttonHoverSound">
+    <source src="sound/button_hover.wav" type="audio/wav">
+  </audio>
+
   <div class="flipbook">
     
 <!-- +++++++++++++ SECTION BELOW PG1-10 +++++++++++++ -->
@@ -422,6 +446,10 @@
 
     // Handle enter button click
     enterButton.addEventListener('click', () => {
+      // Play button click sound
+      buttonClickSound.currentTime = 0;
+      buttonClickSound.play().catch(err => console.log('Audio play failed:', err));
+      
       landingPage.style.opacity = '0';
       setTimeout(() => {
         landingPage.style.display = 'none';
@@ -429,6 +457,31 @@
     });
 
     document.getElementById('backgroundMusic').volume = 0.6; // 60% volume
+
+    const pageFlipSound = document.getElementById('pageFlipSound');
+    pageFlipSound.volume = 1; // 100% volume
+
+    const magnifierShowSound = document.getElementById('magnifierShowSound');
+    magnifierShowSound.volume = 0.5; // 50% volume
+
+    const magnifierCloseSound = document.getElementById('magnifierCloseSound');
+    magnifierCloseSound.volume = 1; // 100% volume
+
+    const buttonHoverSound = document.getElementById('buttonHoverSound');
+    buttonHoverSound.volume = 0.8; // 80% volume
+
+    const buttonClickSound = document.getElementById('buttonClickSound');
+    buttonClickSound.volume = 0.8; // 80% volume
+
+    // Add hover sound to all buttons except navigation arrows
+    document.querySelectorAll('button').forEach(button => {
+      if (!button.classList.contains('nav-button') && !button.classList.contains('left-button') && !button.classList.contains('right-button')) {
+        button.addEventListener('mouseenter', () => {
+          buttonHoverSound.currentTime = 0;
+          buttonHoverSound.play().catch(err => console.log('Audio play failed:', err));
+        });
+      }
+    });
 
     document.querySelectorAll('img').forEach(img => {
     img.setAttribute('draggable', 'false');
@@ -473,6 +526,10 @@
       when: {
           turning: function(event, page) {
               console.log("Turning to page:", page); // Debugging log
+              
+              // Play page flip sound
+              pageFlipSound.currentTime = 0; // Reset to start
+              pageFlipSound.play().catch(err => console.log('Audio play failed:', err));
               
               // Show letterBox after user has seen page 76
               if (page >= 76 && !hasSeenPage76) {
@@ -572,6 +629,15 @@
   magnifierToggle.addEventListener('click', () => {
       magnifierVisible = !magnifierVisible;
       magnifier.style.display = magnifierVisible ? 'block' : 'none';
+      
+      // Play appropriate sound
+      if (magnifierVisible) {
+          magnifierShowSound.currentTime = 0;
+          magnifierShowSound.play().catch(err => console.log('Audio play failed:', err));
+      } else {
+          magnifierCloseSound.currentTime = 0;
+          magnifierCloseSound.play().catch(err => console.log('Audio play failed:', err));
+      }
       
       // Reset position when showing
       if (magnifierVisible) {
@@ -728,6 +794,11 @@
       e.preventDefault();
   });
 </script>
+
+<!-- Credits Footer -->
+<footer id="creditsFooter">
+  <a href="credit.txt" target="_blank" id="creditsLink">Credits & Attributions</a>
+</footer>
 
 </body>
 
