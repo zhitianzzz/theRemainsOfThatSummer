@@ -1,0 +1,79 @@
+# Credits
+
+## Creator & Copyright
+Created by Zhitian Tina Xu
+
+Original Work:
+- All illustrations and artwork
+- Story and narrative content  
+- Book layout and design
+- Website implementation and custom features
+
+© 2025 Zhitian Tina Xu. All rights reserved.
+
+## Development Assistance & AI Declaration
+
+### Use of Generative AI Tools
+This project utilized GitHub Copilot (AI coding assistant powered by OpenAI) for:
+- Code suggestions and implementation assistance
+- Debugging and troubleshooting
+- Feature development and enhancement
+- Technical problem-solving
+
+AI Tool Details:
+- Tool Name: GitHub Copilot
+- Developer: GitHub/OpenAI
+- Purpose: Code completion, debugging assistance, and technical guidance
+- Extent of Use: Used throughout development for code suggestions and implementation support
+
+All creative content (illustrations, narrative, story, character design) is original work by the creator.
+The conceptual design, artistic direction, and final implementation decisions were made by the creator.
+AI assistance was limited to technical coding tasks only.
+
+## Libraries
+- Turn.js by Emmanuel Garcia - Page turning effect
+- jQuery - DOM manipulation
+
+## Project Development
+This project was developed following the tutorial by HankTheTank on Youtube
+- Tutorial: "How to Make a Flipbook Effect Website"
+  https://www.youtube.com/watch?v=HFnzWoGe0so
+- Source Code: https://drive.google.com/drive/folders/1VOJIiWzhCraMTNZ4j-084YqDIIxjTley
+
+## Assets
+- Fonts:
+    "Cedarville Cursive" by Kimberly Geswein
+    Source: Google Fonts (kimberlygeswein.com)
+    License: SIL Open Font License, Version 1.1
+    
+    "Special Elite" by Astigmatic
+    Source: Google Fonts
+    License: Apache License, Version 2.0
+    
+- Background Ambience:
+    "Hell To Heaven - Deep sea - ocean bed, underwater." by BBC Sound Effects
+    Source: https://sound-effects.bbcrewind.co.uk/search?q=07068030
+    License: RemArc License (for non-commercial use)
+
+    The BBC Sound Effects are made available by the BBC in WAV format to download for use under the terms of the RemArc Licence. These sound effects are © copyright of the BBC and may not be used for commercial purposes.
+
+- Sound-FX
+    "Button 6" by josheb_policarpio
+    Source: https://freesound.org/s/613405/
+    License: Creative Commons Attribution 4.0
+    
+    "paper turning" by -+Fugu+-
+    Source: https://freesound.org/s/829131/
+    License: Creative Commons 0 (CC0 - Public Domain)
+    
+    "Modern UI Hover" by yuugfr1a
+    Source: https://freesound.org/s/770203/
+    License: Creative Commons 0 (CC0 - Public Domain)
+    
+    "VS Button Click 05.mp3" by Vilkas_Sound
+    Source: https://freesound.org/s/707042/
+    License: Creative Commons Attribution 4.0
+    
+    "Soft UI Button Click" by Jummit
+    Source: https://freesound.org/s/528561/
+    License: Creative Commons 0 (CC0 - Public Domain)
