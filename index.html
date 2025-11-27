@@ -429,23 +429,25 @@
   <script src="turn.js"></script>
   
   <script>
-    // Landing page logic
-    const landingPage = document.getElementById('landingPage');
-    const Button = document.getElementById('Button');
-    const landingTitle = document.getElementById('landingTitle');
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Landing page logic
+      const landingPage = document.getElementById('landingPage');
+      const enterButton = document.getElementById('enterButton');
+      const landingTitle = document.getElementById('landingTitle');
 
-    // Fade in the title
-    setTimeout(() => {
-      landingTitle.style.opacity = '1';
-    }, 500);
+      // Fade in the title
+      setTimeout(() => {
+        landingTitle.style.opacity = '1';
+      }, 500);
 
-    // Show  button after title appears
-    setTimeout(() => {
-      Button.style.opacity = '1';
-    }, 2500);
+      // Show enter button after title appears
+      setTimeout(() => {
+        enterButton.style.opacity = '1';
+      }, 2500);
 
-    // Handle enter button click
-    enterButton.addEventListener('click', () => {
+      // Handle enter button click
+      enterButton.addEventListener('click', () => {
       // Play button click sound
       buttonClickSound.currentTime = 0;
       buttonClickSound.play().catch(err => console.log('Audio play failed:', err));
@@ -560,6 +562,7 @@
           }
       }
    }); 
+    }); // End DOMContentLoaded
   </script>
   
   <script>
@@ -820,5 +823,3 @@
 </body>
 
 </html>
-
-
