@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="magnifier_styles.css" />
-    <title>A Letter</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <title>A Letter</title>
 </head>
 <body>
 
@@ -51,10 +55,51 @@
   <!-- Magnifier toggle button -->
   <button id="magnifierToggle" aria-label="Toggle magnifier">🔍</button>
 
+  <!-- Page flip sound -->
+  <audio id="pageFlipSound">
+    <source src="sound/paper_flip.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Magnifier sounds -->
+  <audio id="magnifierShowSound">
+    <source src="sound/magnify_show.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="magnifierCloseSound">
+    <source src="sound/magnify_close.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Button hover sound -->
+  <audio id="buttonHoverSound">
+    <source src="sound/button_hover.wav" type="audio/wav">
+  </audio>
+
   <script src="jquery.js"></script>
   <script src="turn.js"></script>
   
   <script>
+    const pageFlipSound = document.getElementById('pageFlipSound');
+    pageFlipSound.volume = 1; // 100% volume
+
+    const magnifierShowSound = document.getElementById('magnifierShowSound');
+    magnifierShowSound.volume = 0.5; // 50% volume
+
+    const magnifierCloseSound = document.getElementById('magnifierCloseSound');
+    magnifierCloseSound.volume = 0.5; // 50% volume
+
+    const buttonHoverSound = document.getElementById('buttonHoverSound');
+    buttonHoverSound.volume = 0.8; // 80% volume
+
+    // Add hover sound to all buttons except navigation arrows
+    document.querySelectorAll('button').forEach(button => {
+      if (!button.classList.contains('nav-button') && !button.classList.contains('left-button') && !button.classList.contains('right-button')) {
+        button.addEventListener('mouseenter', () => {
+          buttonHoverSound.currentTime = 0;
+          buttonHoverSound.play().catch(err => console.log('Audio play failed:', err));
+        });
+      }
+    });
+
     document.querySelectorAll('img').forEach(img => {
     img.setAttribute('draggable', 'false');
     img.setAttribute('oncontextmenu', 'return false;');
@@ -96,6 +141,10 @@
       when: {
           turning: function(event, page) {
               console.log("Turning to page:", page); // Debugging log
+              
+              // Play page flip sound
+              pageFlipSound.currentTime = 0; // Reset to start
+              pageFlipSound.play().catch(err => console.log('Audio play failed:', err));
           }
       }
    }); 
@@ -185,6 +234,15 @@
   magnifierToggle.addEventListener('click', () => {
       magnifierVisible = !magnifierVisible;
       magnifier.style.display = magnifierVisible ? 'block' : 'none';
+      
+      // Play appropriate sound
+      if (magnifierVisible) {
+          magnifierShowSound.currentTime = 0;
+          magnifierShowSound.play().catch(err => console.log('Audio play failed:', err));
+      } else {
+          magnifierCloseSound.currentTime = 0;
+          magnifierCloseSound.play().catch(err => console.log('Audio play failed:', err));
+      }
       
       // Reset position when showing
       if (magnifierVisible) {
@@ -300,6 +358,11 @@
   }
 
 </script>
+
+<!-- Credits Footer -->
+<footer id="creditsFooter">
+  <a href="credit.txt" target="_blank" id="creditsLink">Credits & Attributions</a>
+</footer>
 
 </body>
 </html>
